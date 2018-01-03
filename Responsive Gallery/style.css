@@ -5,8 +5,20 @@
 }
 
 #wrapper {
-    max-width: 1200px;
+    max-width: 400px;
     margin: 0 auto;
+}
+
+@media screen and (min-width:800px) {
+    #wrapper {
+        max-width: 800px;
+    }
+}
+
+@media screen and (min-width:1200px) {
+    #wrapper {
+        max-width: 1200px;
+    }
 }
 
 .example-image {
