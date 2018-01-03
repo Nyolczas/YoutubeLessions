@@ -1,0 +1,28 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+#wrapper {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+img {
+    display: block;
+    max-width: 100%;
+}
+
+.sor {
+    clear: both;
+}
+
+.kep {
+    width: 33%;
+    float: left;
+}
+
+.sor::after {
+    clear: both;
+}
