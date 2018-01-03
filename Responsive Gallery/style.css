@@ -9,22 +9,24 @@
     margin: 0 auto;
 }
 
-img {
-    display: block;
-    max-width: 100%;
-}
-
-.kep {
-    width: 33%;
-    float: left;
+.example-image {
     overflow: hidden;
 }
 
-.example-image img {
+.example-image-link {
+    width: 400px;
+    height: 225px;
+    float: left;
+    overflow: hidden;
+    transition: 0.4s;
+}
+
+.example-image-link img {
     width: 100%;
     height: 100%;
 }
 
-.example-image:hover {
-
+.example-image-link:hover img {
+    transform: scale(1.2,1.2);
+    transition: 0.4s;
 }
