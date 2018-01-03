@@ -14,15 +14,17 @@ img {
     max-width: 100%;
 }
 
-.sor {
-    clear: both;
-}
-
 .kep {
     width: 33%;
     float: left;
+    overflow: hidden;
 }
 
-.sor::after {
-    clear: both;
+.example-image img {
+    width: 100%;
+    height: 100%;
+}
+
+.example-image:hover {
+
 }
