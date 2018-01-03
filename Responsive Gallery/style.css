@@ -4,19 +4,30 @@
     box-sizing: border-box;
 }
 
-#wrapper {
+.flip, .panel {
     max-width: 400px;
     margin: 0 auto;
 }
 
+.flip {
+    padding: 5px;
+    text-align: center;
+    background-color: #e5eecc;
+    border: solid 1px #c3c3c3;
+}   
+
+.panel {
+    display: none;
+}
+
 @media screen and (min-width:800px) {
-    #wrapper {
+    .flip, .panel {
         max-width: 800px;
     }
 }
 
 @media screen and (min-width:1200px) {
-    #wrapper {
+    .flip, .panel {
         max-width: 1200px;
     }
 }
