@@ -8,48 +8,81 @@
     <title>Motion</title>
     <script>
         window.onload = function () {
-            // maga a JS készíti a vásznat
-            var canvas = document.createElement("canvas");
-            c = canvas.getContext("2d");
 
+            var canvas = document.createElement("canvas");
+            var c = canvas.getContext("2d");
+            // object id a részecskékhez
+            var particles = {};
+            var particleIndex = 0;
+            var particleIndex = 0;
+
+            // anim controlls
+            var particleNum = 3,
+                life = 100,
+                rectSizeMax = 12,
+                rectSizeMin = 4,
+                velocityMax = 18,
+                friction = 0.96,
+                damping = -0.8,
+                gravity = 1;
+
+            // maga a JS készíti a vásznat
             canvas.width = 400;
             canvas.height = 400;
-
             document.getElementById("wrapper").appendChild(canvas);
 
             c.fillStyle = "black";
             c.fillRect(0, 0, canvas.width, canvas.height);
 
-            // anim controlls
-            var rectSizeMax = 12,
-                rectSizeMin = 4,
-                velocityMax = 10;
-                
-
-
             function Particle() {
                 this.rectSize = Math.random() * (rectSizeMax - rectSizeMin) + rectSizeMin;
                 this.floor = floor = canvas.height - this.rectSize;
                 this.x = canvas.width / 2;
-                this.y = canvas.height / 2;
+                this.y = canvas.height / 6;
                 this.veloX = Math.random() * velocityMax - (velocityMax / 2);
                 this.veloY = Math.random() * velocityMax - (velocityMax / 2);
+                particleIndex++;
+                particles[particleIndex] = this;
+                this.id = particleIndex;
+                this.life = 0;
+                this.maxLife = Math.random() * life + life / 3;
             }
 
             Particle.prototype.draw = function () {
                 this.x += this.veloX;
                 this.y += this.veloY;
 
+                // pattanás
+                if (this.y > this.floor) {
+                    this.veloY *= damping;
+                    this.y = this.floor;
+                }
+
+                this.veloX *= friction;
+                this.veloY *= friction;
+                this.veloY += gravity;
+
+                // life
+                this.life++;
+                if (this.life >= this.maxLife) {
+                    delete particles[this.id];
+                }
+
+                // creation
                 c.fillStyle = "white";
                 c.fillRect(this.x, this.y, this.rectSize, this.rectSize);
             };
 
-            var p = new Particle();
+            for (var i = 0; i < particleNum; i++) {
+                new Particle();
+            }
 
             setInterval(function () {
                 c.fillStyle = "black";
                 c.fillRect(0, 0, canvas.width, canvas.height);
-                p.draw();
+                for (var i in particles) {
+                    particles[i].draw();
+                }
             }, 30);
         };
     </script>
