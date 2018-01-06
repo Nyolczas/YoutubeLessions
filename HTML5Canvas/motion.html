@@ -20,25 +20,39 @@
             c.fillStyle = "black";
             c.fillRect(0, 0, canvas.width, canvas.height);
 
-            // animáció
-            var posX = canvas.width / 2,
+            // animációs kontroll
+            var rectSize = 10, 
+                posX = canvas.width / 2,
                 posY = canvas.height / 2,
-                //volacity
-                vx = 5, 
-                vy = 5,
-                // friction
-                fr = 0.96;
+                velocityX = 5, 
+                velocityY = -5,
+                friction = 0.96,
+                damping = -0.9;
+                gravity = 1,
+                floor = canvas.height - rectSize;
+                // csillapítás
 
 
+            // anim loop
             setInterval(function () {
                 c.fillStyle = "black";
                 c.fillRect(0, 0, canvas.width, canvas.height);
-                posX += vx;
-                posY += vy;
-                vx *= fr;
-                vy *= fr;
+
+                posX += velocityX;
+                posY += velocityY;
+                
+                // pattanás
+                if (posY > floor){
+                    velocityY *= damping;
+                    posY = floor;
+                }
+
+                velocityX *= friction;
+                velocityY *= friction;
+                velocityY += gravity;
+
                 c.fillStyle = "white";
-                c.fillRect(posX, posY, 10, 10);
+                c.fillRect(posX, posY, rectSize, rectSize);
             }, 30);
         };
     </script>
