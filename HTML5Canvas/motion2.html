@@ -20,13 +20,20 @@
             c.fillStyle = "black";
             c.fillRect(0, 0, canvas.width, canvas.height);
 
+            // anim controlls
+            var rectSizeMax = 12,
+                rectSizeMin = 4,
+                velocityMax = 10;
+                
+
+
             function Particle() {
-                this.rectSize = 10;
+                this.rectSize = Math.random() * (rectSizeMax - rectSizeMin) + rectSizeMin;
                 this.floor = floor = canvas.height - this.rectSize;
                 this.x = canvas.width / 2;
                 this.y = canvas.height / 2;
-                this.veloX = Math.random() * 10 - 5;
-                this.veloY = Math.random() * 10 - 5;
+                this.veloX = Math.random() * velocityMax - (velocityMax / 2);
+                this.veloY = Math.random() * velocityMax - (velocityMax / 2);
             }
 
             Particle.prototype.draw = function () {
