@@ -20,39 +20,29 @@
             c.fillStyle = "black";
             c.fillRect(0, 0, canvas.width, canvas.height);
 
-            // anim kontroll
-            var rectSize = 10, 
-                floor = canvas.height - rectSize,
+            function Particle() {
+                this.rectSize = 10;
+                this.floor = floor = canvas.height - this.rectSize;
+                this.x = canvas.width / 2;
+                this.y = canvas.height / 2;
+                this.veloX = Math.random() * 10 - 5;
+                this.veloY = Math.random() * 10 - 5;
+            }
 
-                posX = canvas.width / 2,
-                posY = canvas.height / 2,
+            Particle.prototype.draw = function () {
+                this.x += this.veloX;
+                this.y += this.veloY;
 
-                velocityX = 5, 
-                velocityY = -5,
-                friction = 0.96,
-                damping = -0.9;
-                gravity = 1;
+                c.fillStyle = "white";
+                c.fillRect(this.x, this.y, this.rectSize, this.rectSize);
+            };
 
-            // anim loop
+            var p = new Particle();
+
             setInterval(function () {
                 c.fillStyle = "black";
                 c.fillRect(0, 0, canvas.width, canvas.height);
-
-                posX += velocityX;
-                posY += velocityY;
-                
-                // pattanás
-                if (posY > floor){
-                    velocityY *= damping;
-                    posY = floor;
-                }
-
-                velocityX *= friction;
-                velocityY *= friction;
-                velocityY += gravity;
-
-                c.fillStyle = "white";
-                c.fillRect(posX, posY, rectSize, rectSize);
+                p.draw();
             }, 30);
         };
     </script>
