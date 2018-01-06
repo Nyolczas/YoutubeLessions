@@ -55,12 +55,21 @@
             // szöveg
             c.fillStyle = "white";
             c.font = "50px Arial";
-            c.fillText("Hello", 350, 100);
+            c.fillText("Hello", 370, 60);
 
-            // fehér kör
+            // vörös pötty
+            c.fillStyle = 'hsl(0, 100%, 50%)';
+            c.lineWidth = 10;
             c.beginPath();
-            c.arc(100, 400, 50, 0, Math.PI * 2, false);
+            c.arc(45, 450, 25, 0, Math.PI * 2, false);
             c.fill();
+            c.stroke();
+
+            // fehér karika
+            c.beginPath();
+            c.arc(445, 450, 25, 0, Math.PI * 2, false);
+            c.stroke();
+
 
         }
     </script>
