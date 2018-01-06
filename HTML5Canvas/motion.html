@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Motion</title>
+    <script>
+        window.onload = function () {
+            // maga a JS készíti a vásznat
+            var canvas = document.createElement("canvas");
+            c = canvas.getContext("2d");
+
+            canvas.width = 400;
+            canvas.height = 400;
+
+            document.getElementById("wrapper").appendChild(canvas);
+
+            c.fillStyle = "black";
+            c.fillRect(0, 0, canvas.width, canvas.height);
+
+            // animáció
+            var posX = canvas.width / 2,
+                posY = canvas.height / 2,
+                //volacity
+                vx = 5, 
+                vy = 5,
+                // friction
+                fr = 0.96;
+
+
+            setInterval(function () {
+                c.fillStyle = "black";
+                c.fillRect(0, 0, canvas.width, canvas.height);
+                posX += vx;
+                posY += vy;
+                vx *= fr;
+                vy *= fr;
+                c.fillStyle = "white";
+                c.fillRect(posX, posY, 10, 10);
+            }, 30);
+        };
+    </script>
+    <style>
+        body,
+        html {
+            margin: 0px;
+            padding: 0px;
+        }
+
+        #wrapper {
+            max-width: 400px;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="wrapper"></div>
+
+</body>
+
+</html>
