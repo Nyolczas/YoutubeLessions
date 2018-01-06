@@ -17,14 +17,14 @@
             var particleIndex = 0;
 
             // anim controlls
-            var particleNum = 100,
-                life = 100,
-                rectSizeMax = 12,
-                rectSizeMin = 4,
-                velocityMax = 18,
-                friction = 0.96,
+            var particleNum = 1,
+                life = 200,
+                sizeMax = 6,
+                sizeMin = 2,
+                velocityMax = 8,
+                friction = 0.9,
                 damping = -0.8,
-                gravity = 1;
+                gravity = 0.3;
 
             // maga a JS készíti a vásznat
             canvas.width = 400;
@@ -35,10 +35,10 @@
             c.fillRect(0, 0, canvas.width, canvas.height);
 
             function Particle() {
-                this.rectSize = Math.random() * (rectSizeMax - rectSizeMin) + rectSizeMin;
-                this.floor = floor = canvas.height - this.rectSize;
+                this.size = Math.random() * (sizeMax - sizeMin) + sizeMin;
+                this.floor = floor = canvas.height - this.size;
                 this.x = canvas.width / 2;
-                this.y = canvas.height / 6;
+                this.y = canvas.height / 7;
                 this.veloX = Math.random() * velocityMax - (velocityMax / 2);
                 this.veloY = Math.random() * velocityMax - (velocityMax / 2);
                 particleIndex++;
@@ -46,6 +46,7 @@
                 this.id = particleIndex;
                 this.life = 0;
                 this.maxLife = Math.random() * life + life / 3;
+                this.color = "hsla("+ parseInt(Math.random() * 80 + 180, 10);
             }
 
             Particle.prototype.draw = function () {
@@ -58,10 +59,17 @@
                     this.y = this.floor;
                 }
 
+                // random velocity
+                if (Math.random() < 0.1) {
+                    this.veloX = Math.random() * velocityMax - (velocityMax / 2);
+                    this.veloY = Math.random() * velocityMax - (velocityMax / 2);
+                }
+
                 // súrlódás és gravitáció
                 this.veloX *= friction;
                 this.veloY *= friction;
                 this.veloY += gravity;
+
 
                 // life
                 this.life++;
@@ -69,20 +77,27 @@
                     delete particles[this.id];
                 }
 
-                // creation
-                c.fillStyle = "white";
-                c.fillRect(this.x, this.y, this.rectSize, this.rectSize);
-            };
+                // életkor számolás az alfához
+                this.age = (this.maxLife - this.life) / life;
 
-            // emitter
-            for (var i = 0; i < particleNum; i++) {
-                new Particle();
-            }
+                // creation
+                c.fillStyle = this.color + ", 100%, 25%, " + this.age + ")";
+                // c.fillRect(this.x, this.y, this.size, this.size);
+                c.beginPath();
+                c.arc(this.x, this.y, this.size, 0, Math.PI * 2, false);
+                c.fill();
+            };
 
             // frame by frame
             setInterval(function () {
-                c.fillStyle = "black";
+                c.fillStyle = "rgba(0, 0, 0, 0.2)";
                 c.fillRect(0, 0, canvas.width, canvas.height);
+
+                // emitter a frame by frame-ben (folyamatos)
+                for (var i = 0; i < particleNum; i++) {
+                    new Particle();
+                }
+
                 for (var i in particles) {
                     particles[i].draw();
                 }
