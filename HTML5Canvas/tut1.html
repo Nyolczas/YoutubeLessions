@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Canvas Demo</title>
+    <script>
+        window.onload = function(){
+            var canvas = document.getElementById('paper'),
+            c = canvas.getContext('2d');
+
+            // vászon sötét alap
+            c.fillStyle = 'hsl(220, 40%, 15%)';
+            c.fillRect(0, 0, canvas.width, canvas.height);
+
+            // vörös négyzet
+            c.fillStyle = 'hsl(0, 100%, 50%)';
+            c.fillRect(20, 20, 50, 50);
+
+            // fehér keret
+            c.strokeStyle = 'white';
+            c.lineWidth = 10;
+            c.strokeRect(20, 20, 50, 50);
+
+            // vonal munka
+            c.lineWidth = 5;
+            c.beginPath();
+            c.moveTo(72, 72);
+            c.lineTo(200, 200);
+            c.stroke();
+
+            // csillag
+            c.lineWidth = 10;
+            c.beginPath();
+            c.moveTo(200, 200);
+            c.lineTo(220, 250);
+            c.lineTo(200, 300);
+            c.lineTo(250, 280);
+            c.lineTo(300, 300);
+            c.lineTo(280, 250);
+            c.lineTo(300, 200);
+            c.lineTo(250, 220);
+            c.closePath();
+            c.fill();
+            c.stroke();
+
+            // vonal
+            c.lineWidth = 5;
+            c.beginPath();
+            c.moveTo(300, 300);
+            c.lineTo(428, 428);
+            c.stroke();
+
+            // szöveg
+            c.fillStyle = "white";
+            c.font = "50px Arial";
+            c.fillText("Hello", 350, 100);
+
+            // fehér kör
+            c.beginPath();
+            c.arc(100, 400, 50, 0, Math.PI * 2, false);
+            c.fill();
+
+        }
+    </script>
+</head>
+<body>
+    <canvas id="paper" width="500" height="500">
+
+    </canvas>
+</body>
+</html>
