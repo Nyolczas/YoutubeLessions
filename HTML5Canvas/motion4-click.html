@@ -39,16 +39,18 @@
                         "Kreatív", "Elkészítem a weboldaladat", 
 
                         // main
-                        "Vizuális kommunikáció",
+                        "Vizuális kommunikáció", "Rajz - Festés - Szobrászat",
                         "Grafika", "Animáció", "Programozás", "Illusztráció", "Motion design", 
                         "Látványtervek", "Design",
                         "Grafika", "Animáció", "Programozás", "Illusztráció", "Motion design", 
-                        "Látványtervek", "Design", "Logóanimáció", "Webfejlesztés",
-                        // bővebb
-                        "2D/3D grafika", "2D/3D animáció", "Művészeti vezetés",
+                        "Látványtervek", "Design", "Logóanimáció", "Webfejlesztés", "VFX", 
+                        // bővebb - grafika
+                        "2D - 3D grafika", "2D - 3D animáció", "Művészeti vezetés",
                         "3D modellezés - textúrázás", "Mattepaint", "Rigging", 
                         "Animációs rendezés", "Webfejlesztés", "Concept art", "Storyboard rajzolás",
-                        "Character design", "Environment art",                        
+                        "Character design", "Environment art", 
+                        // bővebb - web
+                        "Sitebuild", "Responsive sitebuild", "Logó animáció", "Banner animáció",                  
                         // szoftver
                         "Photoshop", "Illustrator", "Maya", "AfterEffects",
                         "Photoshop", "Illustrator", "Maya", "ZBrush", "AfterEffects", "InDesign",
@@ -70,13 +72,13 @@
 
         // anim controlls
         var particleNum = 5,
-            life = 150,
+            life = 250,
             sizeMax = 12,
             sizeMin = 8,
-            velocityMax = 120,
-            friction = 0.9,
+            velocityMax = 50,
+            friction = 0.95,
             damping = -0.5,
-            gravity = -0.1;
+            gravity = -0.03;
 
         function Particle() {
             this.size = Math.random() * (sizeMax - sizeMin) + sizeMin;
