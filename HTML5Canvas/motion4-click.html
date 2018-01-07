@@ -33,10 +33,30 @@
         var xkoordinata;
         var ykoordinata;
 
+        var textCloud = [
+                        // szlogen
+                        "Tudomány és Művészet", "Innováció", "Lifelong learning",
+                        // main
+                        "Grafika", "Animáció", "Programozás", "Illusztráció", "Motion design", 
+                        "Látványtervek", "Design",
+                        "Grafika", "Animáció", "Programozás", "Illusztráció", "Motion design", 
+                        "Látványtervek", "Design",
+                        // bővebb
+                        "2D/3D grafika", "2D/3D animáció", "Művészeti vezetés",
+                        "3D modellezés - textúrázás", "Mattepaint", "Rigging", 
+                        "Animációs rendezés", "Webfejlesztés", "Concept art", "Storyboard rajzolás",
+                        "Character design", "Environment art",                        
+                        // szoftver
+                        "Photoshop", "Illustrator", "Maya", "AfterEffects",
+                        "Photoshop", "Illustrator", "Maya", "ZBrush", "AfterEffects", "InDesign",
+                        "KeyShot", "AnimeStudio", 
+                        // programnyelv
+                        "JavaSript", "Bootstrap", "JQuery", "Python", "HTML", "CSS"
+                        ];
+
         window.onmousemove = function (e) {
             xkoordinata = e.clientX;
             ykoordinata = e.clientY;
-            console.log("xkoordinata: " + xkoordinata + ", ykoordinata: " + ykoordinata);
         }
 
         // object id a részecskékhez
@@ -45,14 +65,14 @@
         var particleIndex = 0;
 
         // anim controlls
-        var particleNum = 3,
+        var particleNum = 5,
             life = 150,
             sizeMax = 12,
             sizeMin = 8,
-            velocityMax = 30,
+            velocityMax = 120,
             friction = 0.9,
-            damping = -0.8,
-            gravity = 1;
+            damping = -0.5,
+            gravity = -0.1;
 
         function Particle() {
             this.size = Math.random() * (sizeMax - sizeMin) + sizeMin;
@@ -66,16 +86,23 @@
             this.id = particleIndex;
             this.life = 0;
             this.maxLife = Math.random() * life + life / 3;
+            this.txt = textCloud[parseInt(Math.random() * textCloud.length)];
         }
 
         Particle.prototype.draw = function () {
             this.x += this.veloX;
             this.y += this.veloY;
 
-            // pattanás
+            // pattanás padló
             if (this.y > this.floor) {
                 this.veloY *= damping;
                 this.y = this.floor;
+            }
+
+            // pattanás plafon
+            if (this.y <= this.size) {
+                this.veloY *= damping;
+                this.y = this.size;
             }
 
             // súrlódás és gravitáció
@@ -89,9 +116,13 @@
                 delete particles[this.id];
             }
 
+            // életkor számolás az alfához
+            this.age = (this.maxLife - this.life) / life;
+
             // creation
-            c.fillStyle = "white";
-            c.fillRect(this.x, this.y, this.size, this.size);
+            c.fillStyle = "hsla(8, 50%, 100%, " + this.age + ")";
+            c.font = "20px Arial";
+            c.fillText(this.txt, this.x, this.y);
         };
 
         // frame by frame
