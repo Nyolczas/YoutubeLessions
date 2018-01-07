@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Motion</title>
+    <style>
+        body,
+        html {
+            margin: 0px;
+            padding: 0px;
+            box-sizing: border-box;
+            overflow: hidden;
+        }
+
+        canvas {
+            background-color: rgb(26, 48, 97);
+        }
+    </style>
+</head>
+
+<body onclick="textExplosion()">
+    <canvas></canvas>
+    <script>
+        var canvas = document.querySelector('canvas');
+        var W = window.innerWidth;
+        var H = window.innerHeight;
+        canvas.width = W;
+        canvas.height = H;
+        var c = canvas.getContext('2d');
+        var xkoordinata;
+        var ykoordinata;
+
+        window.onmousemove = function (e) {
+            xkoordinata = e.clientX;
+            ykoordinata = e.clientY;
+            console.log("xkoordinata: " + xkoordinata + ", ykoordinata: " + ykoordinata);
+        }
+
+        // object id a részecskékhez
+        var particles = {};
+        var particleIndex = 0;
+        var particleIndex = 0;
+
+        // anim controlls
+        var particleNum = 3,
+            life = 150,
+            sizeMax = 12,
+            sizeMin = 8,
+            velocityMax = 30,
+            friction = 0.9,
+            damping = -0.8,
+            gravity = 1;
+
+        function Particle() {
+            this.size = Math.random() * (sizeMax - sizeMin) + sizeMin;
+            this.floor = floor = canvas.height - this.size;
+            this.x = xkoordinata;
+            this.y = ykoordinata;
+            this.veloX = Math.random() * velocityMax - (velocityMax / 2);
+            this.veloY = Math.random() * velocityMax - (velocityMax / 2);
+            particleIndex++;
+            particles[particleIndex] = this;
+            this.id = particleIndex;
+            this.life = 0;
+            this.maxLife = Math.random() * life + life / 3;
+        }
+
+        Particle.prototype.draw = function () {
+            this.x += this.veloX;
+            this.y += this.veloY;
+
+            // pattanás
+            if (this.y > this.floor) {
+                this.veloY *= damping;
+                this.y = this.floor;
+            }
+
+            // súrlódás és gravitáció
+            this.veloX *= friction;
+            this.veloY *= friction;
+            this.veloY += gravity;
+
+            // life
+            this.life++;
+            if (this.life >= this.maxLife) {
+                delete particles[this.id];
+            }
+
+            // creation
+            c.fillStyle = "white";
+            c.fillRect(this.x, this.y, this.size, this.size);
+        };
+
+        // frame by frame
+        setInterval(function () {
+            c.clearRect(0, 0, W, H);
+            for (var i in particles) {
+                particles[i].draw();
+            }
+        }, 30);
+
+        function textExplosion() {
+            // emitter
+            for (var i = 0; i < particleNum; i++) {
+                new Particle();
+            }
+        }
+    </script>
+</body>
+
+</html>
