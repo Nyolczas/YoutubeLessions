@@ -21,8 +21,8 @@
     </style>
 </head>
 
-<body onclick="textExplosion()">
-    <canvas></canvas>
+<body>
+    <canvas onclick="textExplosion()"></canvas>
     <script>
         var canvas = document.querySelector('canvas');
         var W = window.innerWidth;
@@ -32,33 +32,35 @@
         var c = canvas.getContext('2d');
         var xkoordinata;
         var ykoordinata;
+        var TheTextWasWritten = 0;
 
         var textCloud = [
-                        // szlogen
-                        "Tudomány és Művészet", "Innováció", "Lifelong learning", "Vizuális trendek", 
-                        "Kreatív", "Elkészítem a weboldaladat", 
 
-                        // main
-                        "Vizuális kommunikáció", "Rajz - Festés - Szobrászat",
-                        "Grafika", "Animáció", "Programozás", "Illusztráció", "Motion design", 
-                        "Látványtervek", "Design",
-                        "Grafika", "Animáció", "Programozás", "Illusztráció", "Motion design", 
-                        "Látványtervek", "Design", "Logóanimáció", "Webfejlesztés", "VFX", 
-                        // bővebb - grafika
-                        "2D - 3D grafika", "2D - 3D animáció", "Művészeti vezetés",
-                        "3D modellezés - textúrázás", "Mattepaint", "Rigging", 
-                        "Animációs rendezés", "Webfejlesztés", "Concept art", "Storyboard rajzolás",
-                        "Character design", "Environment art", 
-                        // bővebb - web
-                        "Sitebuild", "Responsive sitebuild", "Logó animáció", "Banner animáció",                  
-                        // szoftver
-                        "Photoshop", "Illustrator", "Maya", "AfterEffects",
-                        "Photoshop", "Illustrator", "Maya", "ZBrush", "AfterEffects", "InDesign",
-                        "AnimeStudio", 
-                        // programnyelv
-                        "JavaSript", "Bootstrap", "JQuery", "Python", "HTML", "CSS", 
-                        "PHP", "MySQL", "NodeJS"
-                        ];
+            // main
+            "Webfejlesztés", "Grafika", "Animáció", "Programozás", "Design", "Illusztráció",
+            "Vizuális kommunikáció", "Rajz - Festés - Szobrászat",
+            "Illusztráció", "Motion design",
+            "Látványtervek",
+            "Grafika", "Animáció", "Programozás", "Motion design",
+            "Látványtervek", "Design", "Logóanimáció", "VFX",
+            // szlogen
+            "Tudomány és Művészet", "Innováció", "Lifelong learning", "Vizuális trendek",
+            "Kreatív", "Elkészítem a weboldaladat",
+            // bővebb - grafika
+            "2D - 3D grafika", "2D - 3D animáció", "Művészeti vezetés",
+            "3D modellezés - textúrázás", "Mattepaint", "Rigging",
+            "Animációs rendezés", "Webfejlesztés", "Concept art", "Storyboard rajzolás",
+            "Character design", "Environment art",
+            // bővebb - web
+            "Sitebuild", "Responsive sitebuild", "Logó animáció", "Banner animáció",
+            // szoftver
+            "Photoshop", "Illustrator", "Maya", "AfterEffects",
+            "Photoshop", "Illustrator", "Maya", "ZBrush", "AfterEffects", "InDesign",
+            "AnimeStudio",
+            // programnyelv
+            "JavaSript", "Bootstrap", "JQuery", "Python", "HTML", "CSS",
+            "PHP", "MySQL", "NodeJS"
+        ];
 
         window.onmousemove = function (e) {
             xkoordinata = e.clientX;
@@ -92,7 +94,12 @@
             this.id = particleIndex;
             this.life = 0;
             this.maxLife = Math.random() * life + life / 3;
-            this.txt = textCloud[parseInt(Math.random() * textCloud.length)];
+            if (TheTextWasWritten < particleNum) {
+                this.txt = textCloud[TheTextWasWritten];
+            }
+            else {
+                this.txt = textCloud[parseInt(Math.random() * textCloud.length)];
+            }
         }
 
         Particle.prototype.draw = function () {
@@ -143,6 +150,7 @@
             // emitter
             for (var i = 0; i < particleNum; i++) {
                 new Particle();
+                TheTextWasWritten++;
             }
         }
     </script>
