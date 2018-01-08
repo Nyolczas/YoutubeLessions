@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Motion</title>
+    <style>
+        body,
+        html {
+            margin: 0px;
+            padding: 0px;
+            box-sizing: border-box;
+            overflow: hidden;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas onclick="textExplosion()"></canvas>
+    <script>
+        var canvas = document.querySelector('canvas');
+        var W = window.innerWidth;
+        var H = window.innerHeight;
+        canvas.width = W;
+        canvas.height = H;
+        var c = canvas.getContext('2d');
+        var xkoordinata;
+        var ykoordinata;
+        var TheTextWasWritten = 0;
+        var hslCnt = 0;
+        var darkColor = "hsl(0, 80%, 10%)";
+
+        var textCloud = [
+
+            // main
+            "Webfejlesztés", "Grafika", "Animáció", "Programozás", "Design", "Illusztráció",
+            "Vizuális kommunikáció", "Rajz - Festés - Szobrászat",
+            "Illusztráció", "Motion design",
+            "Látványtervek",
+            "Grafika", "Animáció", "Programozás", "Motion design",
+            "Látványtervek", "Design", "Logóanimáció", "VFX",
+            // szlogen
+            "Tudomány és Művészet", "Innováció", "Lifelong learning", "Vizuális trendek",
+            "Kreatív", "Elkészítem a weboldaladat",
+            // bővebb - grafika
+            "2D - 3D grafika", "2D - 3D animáció", "Művészeti vezetés",
+            "3D modellezés - textúrázás", "Mattepaint", "Rigging",
+            "Animációs rendezés", "Webfejlesztés", "Concept art", "Storyboard rajzolás",
+            "Character design", "Environment art",
+            // bővebb - web
+            "Sitebuild", "Responsive sitebuild", "Logó animáció", "Banner animáció",
+            // szoftver
+            "Photoshop", "Illustrator", "Maya", "AfterEffects",
+            "Photoshop", "Illustrator", "Maya", "ZBrush", "AfterEffects", "InDesign",
+            "AnimeStudio",
+            // programnyelv
+            "JavaSript", "Bootstrap", "JQuery", "Python", "HTML", "CSS",
+            "PHP", "MySQL", "NodeJS"
+        ];
+
+        window.onmousemove = function (e) {
+            xkoordinata = e.clientX;
+            ykoordinata = e.clientY;
+        }
+        // ======================= szöveg animáció =======================
+        // object id a szöveg részecskékhez
+        var txtParticles = {};
+        var txtParticleIndex = 0;
+
+        // anim controlls
+        var txtParticleNum = 5,
+            life = 250,
+            sizeMax = 12,
+            sizeMin = 8,
+            velocityMax = 50,
+            friction = 0.95,
+            damping = -0.5,
+            gravity = -0.03;
+
+        function Particle() {
+            this.size = Math.random() * (sizeMax - sizeMin) + sizeMin;
+            this.floor = canvas.height - this.size;
+            this.right = canvas.width - this.size;
+            this.x = xkoordinata;
+            this.y = ykoordinata;
+            this.veloX = Math.random() * velocityMax - (velocityMax / 2);
+            this.veloY = Math.random() * velocityMax - (velocityMax / 2);
+            txtParticleIndex++;
+            txtParticles[txtParticleIndex] = this;
+            this.id = txtParticleIndex;
+            this.life = 0;
+            this.maxLife = Math.random() * life + life / 3;
+            if (TheTextWasWritten < txtParticleNum) {
+                this.txt = textCloud[TheTextWasWritten];
+            }
+            else {
+                this.txt = textCloud[parseInt(Math.random() * textCloud.length)];
+            }
+        }
+
+        Particle.prototype.draw = function () {
+            this.x += this.veloX;
+            this.y += this.veloY;
+
+            // pattanás padló
+            if (this.y > this.floor) {
+                this.veloY *= damping;
+                this.y = this.floor;
+            }
+
+            // pattanás plafon
+            if (this.y <= this.size) {
+                this.veloY *= damping;
+                this.y = this.size;
+            }
+
+            // pattanás bal
+            if (this.x <= this.size) {
+                this.veloX *= damping;
+                this.x = this.size;
+            }
+
+            // pattanás jobb
+            if (this.x > this.right) {
+                this.veloX *= damping;
+                this.x = this.right;
+            }
+
+            // súrlódás és gravitáció
+            this.veloX *= friction;
+            this.veloY *= friction;
+            this.veloY += gravity;
+
+            // life
+            this.life++;
+            if (this.life >= this.maxLife) {
+                delete txtParticles[this.id];
+            }
+
+            // életkor számolás az alfához
+            this.age = (this.maxLife - this.life) / life;
+
+            // creation
+            c.fillStyle = "hsla(8, 50%, 100%, " + this.age + ")";
+            c.font = "20px Arial";
+            c.fillText(this.txt, this.x, this.y);
+        };
+
+        function textExplosion() {
+            // emitter
+            for (var i = 0; i < txtParticleNum; i++) {
+                new Particle();
+                TheTextWasWritten++;
+            }
+        }
+        // ======================= szöveg animáció vége =======================
+
+        // ======================= color clock =======================
+        // hsl színek beállítása
+        function colorClock() {
+            hslCnt = counter(hslCnt);
+            darkColor = 'hsl(' + hslCnt + ', 80%, 10%)';
+        }
+
+        // számláló a hsl színhez
+        function counter(x) {
+            if (x == 360) {
+                return 1;
+            } else {
+                return x + 1;
+            }
+        }
+        // ======================= color clock vége =======================
+        // frame by frame
+        setInterval(function () {
+            c.clearRect(0, 0, W, H);
+            colorClock();
+            document.body.style.background = darkColor;
+            for (var i in txtParticles) {
+                txtParticles[i].draw();
+            }
+        }, 30);
+
+
+    </script>
+</body>
+
+</html>
