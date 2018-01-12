@@ -18,7 +18,7 @@
 </head>
 
 <body>
-    <canvas onclick="textExplosion()"></canvas>
+    <canvas onclick="textExplosion()" id="canvas"></canvas>
     <script>
         var canvas = document.querySelector('canvas');
         var W = window.innerWidth;
@@ -202,9 +202,11 @@
                 if (mouse.x - this.x < mouseField && mouse.x - this.x > -mouseField
                     && mouse.y - this.y < mouseField && mouse.y - this.y > -mouseField) {
                     if (this.radius < maxRadius * 3) {
+                        document.getElementById("canvas").style.cursor = "pointer";
                         this.radius++;
                     }
                 } else if (this.radius > this.minRadius) {
+                    document.getElementById("canvas").style.cursor = "crosshair";
                     this.radius -= 1;
                 }
 
@@ -233,7 +235,7 @@
         function colorClock() {
             hslCnt = counter(hslCnt);
             darkColor = 'hsl(' + hslCnt + ', 80%, 10%)';
-            bubbleColor = "hsla(" +hslCnt + ", 50%, 50%, 0.1)";
+            bubbleColor = "hsla(" + hslCnt + ", 50%, 50%, 0.1)";
         }
 
         // számláló a hsl színhez
