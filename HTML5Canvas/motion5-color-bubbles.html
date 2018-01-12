@@ -14,6 +14,10 @@
             box-sizing: border-box;
             overflow: hidden;
         }
+
+        #canvas {
+            cursor: crosshair;
+        }
     </style>
 </head>
 
@@ -163,8 +167,8 @@
         // ======================= szöveg animáció vége =======================
 
         // ======================= pötty animáció =======================
-        var minSpeed = 0.2;
-        var speedFactor = 0.5;
+        var minSpeed = 1;
+        var speedFactor = 1;
         var minRadius = Math.floor((W + H) * 0.001);
         var maxRadius = minRadius * 8 - minRadius;
 
@@ -208,57 +212,56 @@
                 } else if (this.radius > this.minRadius) {
                     document.getElementById("canvas").style.cursor = "crosshair";
                     this.radius -= 1;
+                    }
+                    this.draw();
                 }
-
-                this.draw();
             }
-        }
 
-        // ===
-        var CircleArray = [];
+            // ===
+            var CircleArray = [];
 
-        for (var i = 0; i < quant; i++) {
-            var x = Math.random() * W;
-            var y = Math.random() * H;
-            var xSpeed = (Math.random() - 0.5) * speedFactor;
-            xSpeed += xSpeed * minSpeed;
-            var ySpeed = (Math.random() - 0.5) * speedFactor;
-            ySpeed += ySpeed * minSpeed;
-            radius = Math.random() * maxRadius + minRadius;
+            for (var i = 0; i < quant; i++) {
+                var x = Math.random() * W;
+                var y = Math.random() * H;
+                var xSpeed = (Math.random() - 0.5) * speedFactor;
+                xSpeed += xSpeed * minSpeed;
+                var ySpeed = (Math.random() - 0.5) * speedFactor;
+                ySpeed += ySpeed * minSpeed;
+                radius = Math.random() * maxRadius + minRadius;
 
-            CircleArray.push(new Circle(x, y, xSpeed, ySpeed, radius));
-        }
-        // ======================= pötty animáció vége =======================
-
-        // ======================= color clock =======================
-        // hsl színek beállítása
-        function colorClock() {
-            hslCnt = counter(hslCnt);
-            darkColor = 'hsl(' + hslCnt + ', 80%, 10%)';
-            bubbleColor = "hsla(" + hslCnt + ", 50%, 50%, 0.1)";
-        }
-
-        // számláló a hsl színhez
-        function counter(x) {
-            if (x == 360) {
-                return 1;
-            } else {
-                return x + 1;
+                CircleArray.push(new Circle(x, y, xSpeed, ySpeed, radius));
             }
-        }
-        // ======================= color clock vége =======================
-        // frame by frame
-        setInterval(function () {
-            c.clearRect(0, 0, W, H);
-            colorClock();
-            document.body.style.background = darkColor;
-            for (var i = 0; i < CircleArray.length; i++) {
-                CircleArray[i].update();
+            // ======================= pötty animáció vége =======================
+
+            // ======================= color clock =======================
+            // hsl színek beállítása
+            function colorClock() {
+                hslCnt = counter(hslCnt);
+                darkColor = 'hsl(' + hslCnt + ', 80%, 10%)';
+                bubbleColor = "hsla(" + hslCnt + ", 100%, 50%, 0.2)";
             }
-            for (var i in txtParticles) {
-                txtParticles[i].draw();
+
+            // számláló a hsl színhez
+            function counter(x) {
+                if (x == 360) {
+                    return 1;
+                } else {
+                    return x + 1;
+                }
             }
-        }, 30);
+            // ======================= color clock vége =======================
+            // frame by frame
+            setInterval(function () {
+                c.clearRect(0, 0, W, H);
+                colorClock();
+                document.body.style.background = darkColor;
+                for (var i = 0; i < CircleArray.length; i++) {
+                    CircleArray[i].update();
+                }
+                for (var i in txtParticles) {
+                    txtParticles[i].draw();
+                }
+            }, 30);
 
 
     </script>
