@@ -13,6 +13,9 @@ function eyelid() {
     this.y = 0;
     this.forgatas = 0;
     this.szin = "balck";
+    this.suly = W / 3;
+    this.suly2 = W - this.suly;
+    this.nyitott = H / 3;
 
     this.rajzol = function(ctx) {
         ctx.save();
@@ -24,10 +27,10 @@ function eyelid() {
 
         ctx.beginPath();
 
-        ctx.moveTo(-25, -25);
-        ctx.lineTo(25, 0);
-        ctx.lineTo(-25, 25);
+        ctx.moveTo(0, H);
         ctx.lineTo(0, 0);
+        ctx.bezierCurveTo(this.suly, this.nyitott, this.suly2, this.nyitott, W, 0);
+        ctx.lineTo(W, H);
 
         ctx.closePath();
         ctx.fill();
@@ -39,7 +42,6 @@ function eyelid() {
 // ================ rajzolás ================ 
 window.onload = function () {
     var lid1 = new eyelid();
-    lid1.x = W / 2;
     lid1.y = H / 2;
     lid1.rajzol(ctx);
 } 
