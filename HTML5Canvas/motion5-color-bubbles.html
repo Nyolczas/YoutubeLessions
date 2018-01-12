@@ -29,6 +29,7 @@
         var TheTextWasWritten = 0;
         var hslCnt = 0;
         var darkColor = "hsl(0, 80%, 10%)";
+        var bubbleColor = "hsla(0, 50%, 50%, 0.1)";
 
         var textCloud = [
 
@@ -170,6 +171,7 @@
         var quant = Math.floor((W + H) * 0.01);
         var mouseField = 44;
 
+        // ===
         function Circle(x, y, xSpeed, ySpeed, radius) {
             this.x = x;
             this.y = y;
@@ -181,7 +183,7 @@
             this.draw = function () {
                 c.beginPath();
                 c.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
-                c.fillStyle = 'hsla(' + cnt + ', 50%, 50%, 0.1)';
+                c.fillStyle = bubbleColor;
                 c.fill();
             }
 
@@ -209,6 +211,21 @@
                 this.draw();
             }
         }
+
+        // ===
+        var CircleArray = [];
+
+        for (var i = 0; i < quant; i++) {
+            var x = Math.random() * W;
+            var y = Math.random() * H;
+            var xSpeed = (Math.random() - 0.5) * speedFactor;
+            xSpeed += xSpeed * minSpeed;
+            var ySpeed = (Math.random() - 0.5) * speedFactor;
+            ySpeed += ySpeed * minSpeed;
+            radius = Math.random() * maxRadius + minRadius;
+
+            CircleArray.push(new Circle(x, y, xSpeed, ySpeed, radius));
+        }
         // ======================= pötty animáció vége =======================
 
         // ======================= color clock =======================
@@ -216,6 +233,7 @@
         function colorClock() {
             hslCnt = counter(hslCnt);
             darkColor = 'hsl(' + hslCnt + ', 80%, 10%)';
+            bubbleColor = "hsla(" +hslCnt + ", 50%, 50%, 0.1)";
         }
 
         // számláló a hsl színhez
@@ -232,6 +250,9 @@
             c.clearRect(0, 0, W, H);
             colorClock();
             document.body.style.background = darkColor;
+            for (var i = 0; i < CircleArray.length; i++) {
+                CircleArray[i].update();
+            }
             for (var i in txtParticles) {
                 txtParticles[i].draw();
             }
