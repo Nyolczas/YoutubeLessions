@@ -53,11 +53,11 @@ window.onload = function () {
     var blinkR = 0;
     var blinkSx = 1;
     var blinkSy = 1;
-    var blinkOpen = H * 1.2;
+    var blinkOpen = H * 1;
 
     var lid1 = new eyelid();
     lid1.x = blinkX;
-    lid1.y = blinkY;
+    lid1.y = blinkY + H / 2;
     lid1.forgatas = blinkR;
     lid1.meretX = blinkSx;
     lid1.meretY = blinkSy;
@@ -66,7 +66,7 @@ window.onload = function () {
 
     var lid2 = new eyelid();
     lid2.x = blinkX;
-    lid2.y = blinkY;
+    lid2.y = blinkY - H / 2;
     lid2.forgatas = blinkR + 180;
     lid2.meretX = blinkSx;
     lid2.meretY = blinkSy;
