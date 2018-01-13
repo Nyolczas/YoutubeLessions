@@ -73,6 +73,6 @@ function blink(X, Y, R, Sx, Sy, Open) {
 }
 
 // ================ meghívás ================ 
-var aniBlink = new blink(W/2, H/2, 0, 1, 1, 20);
-window.onload = aniBlink;
+
+window.onload = blink(W/2, H/2, 0, 1, 1, 120);
 
