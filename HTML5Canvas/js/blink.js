@@ -1,10 +1,10 @@
 var canvas = document.querySelector('#blink-canvas');
-        var W = window.innerWidth;
-        var H = window.innerHeight;
-        canvas.width = W;
-        canvas.height = H;
-        var ctx = canvas.getContext('2d');
-        canvas.style.background = "pink";
+var W = window.innerWidth;
+var H = window.innerHeight;
+canvas.width = W;
+canvas.height = H;
+var ctx = canvas.getContext('2d');
+canvas.style.background = "pink";
 
 // ================ szemhéj objektum ================       
 
@@ -19,21 +19,21 @@ function eyelid() {
     this.meretX = 1;
     this.meretY = 1;
 
-    this.rajzol = function(ctx) {
+    this.rajzol = function (ctx) {
         ctx.save();
 
         ctx.translate(this.x, this.y);
-        ctx.rotate(this.forgatas);
+        ctx.rotate(this.forgatas * Math.PI / 180);
         ctx.scale(this.meretX, this.meretY);
 
         ctx.fillStyle = this.szin;
 
         ctx.beginPath();
 
-        ctx.moveTo(0, H);
-        ctx.lineTo(0, 0);
-        ctx.bezierCurveTo(this.suly, this.nyitott, this.suly2, this.nyitott, W, 0);
-        ctx.lineTo(W, H);
+        ctx.moveTo(W / -2, H / 2);
+        ctx.lineTo(W / -2, H / -2);
+        ctx.bezierCurveTo(this.suly - W / 2, this.nyitott - H / 2, this.suly2 - W / 2, this.nyitott - H / 2, W / 2, H / -2);
+        ctx.lineTo(W / 2, H / 2);
 
         ctx.closePath();
         ctx.fill();
@@ -42,14 +42,18 @@ function eyelid() {
     }
 }
 
-// ================ rajzolás ================ 
+// ================ pislogás objektum ================ 
+
+// function blink() {
+//     this.
+// }
 window.onload = function () {
     var blinkX = W / 2;
     var blinkY = H / 2;
     var blinkR = 0;
-    var blinkSx = 0.5;
-    var blinkSy = 0.5;
-    var blinkOpen = H;
+    var blinkSx = 1;
+    var blinkSy = 1;
+    var blinkOpen = H * 1.2;
 
     var lid1 = new eyelid();
     lid1.x = blinkX;
@@ -63,7 +67,7 @@ window.onload = function () {
     var lid2 = new eyelid();
     lid2.x = blinkX;
     lid2.y = blinkY;
-    lid2.forgatas = blinkR + 360;
+    lid2.forgatas = blinkR + 180;
     lid2.meretX = blinkSx;
     lid2.meretY = blinkSy;
     lid2.nyitott = blinkOpen;
