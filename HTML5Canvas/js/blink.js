@@ -44,33 +44,35 @@ function eyelid() {
 
 // ================ pislogás objektum ================ 
 
-// function blink() {
-//     this.
-// }
-window.onload = function () {
-    var blinkX = W / 2;
-    var blinkY = H / 2;
-    var blinkR = 0;
-    var blinkSx = 1;
-    var blinkSy = 1;
-    var blinkOpen = H * 1;
+function blink(X, Y, R, Sx, Sy, Open) {
+    this.X = W / 2;
+    this.Y = H / 2;
+    this.R = 0;
+    this.Sx = 1;
+    this.Sy = 1;
+    this.Open = H * 1;
 
     var lid1 = new eyelid();
-    lid1.x = blinkX;
-    lid1.y = blinkY + H / 2;
-    lid1.forgatas = blinkR;
-    lid1.meretX = blinkSx;
-    lid1.meretY = blinkSy;
-    lid1.nyitott = blinkOpen;
+    lid1.x = X;
+    lid1.y = Y + H / 2;
+    lid1.forgatas = R;
+    lid1.meretX = Sx;
+    lid1.meretY = Sy;
+    lid1.nyitott = Open;
     lid1.rajzol(ctx);
 
     var lid2 = new eyelid();
-    lid2.x = blinkX;
-    lid2.y = blinkY - H / 2;
-    lid2.forgatas = blinkR + 180;
-    lid2.meretX = blinkSx;
-    lid2.meretY = blinkSy;
-    lid2.nyitott = blinkOpen;
+    lid2.x = X;
+    lid2.y = Y - H / 2;
+    lid2.forgatas = R + 180;
+    lid2.meretX = Sx;
+    lid2.meretY = Sy;
+    lid2.nyitott = Open;
 
     lid2.rajzol(ctx);
-} 
+}
+
+// ================ meghívás ================ 
+var aniBlink = new blink(W/2, H/2, 0, 1, 1, 20);
+window.onload = aniBlink;
+
