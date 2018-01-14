@@ -73,17 +73,17 @@ function blink(X, Y, R, Sx, Sy, Open) {
 }
 
 // ================ betöltés anim (kinyit) ================ 
-// anim controls
-var time = 50000;
 var openStart = 0;
-var openScale = 1;
+var openScaleX = 1.2;
+var openScaleY = 2;
 
 window.onload = function Open() {
     setInterval(function () {
         ctx.clearRect(0, 0, W, H);
-        blink(W / 2, H / 2, 0, openScale, openScale, openStart);
+        blink(W / 2, H / 2, 0, openScaleX, openScaleY, openStart);
         openStart += 10;
-        openScale += 0.01;
+        openScaleX += 0.01;
+        openScaleY += 0.01;
     }, 1);
 
 };
