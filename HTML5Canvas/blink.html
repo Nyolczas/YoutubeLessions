@@ -13,9 +13,18 @@
             box-sizing: border-box;
             overflow: hidden;
         }
+
+        #blink-canvas{
+            z-index: 1000;
+            position: absolute;
+            top: 0px;
+            left: 0px;
+            top: 0;
+        }
     </style>
 </head>
 <body>
+    <button onclick="linkBlink()" id="link-button">Blink</button>
     <canvas id="blink-canvas"></canvas>
     <script src="js/blink.js"></script>
 </body>

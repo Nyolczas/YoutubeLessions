@@ -4,7 +4,7 @@ var H = window.innerHeight;
 canvas.width = W;
 canvas.height = H;
 var ctx = canvas.getContext('2d');
-canvas.style.background = "pink";
+// canvas.style.background = "pink";
 
 // ================ szemhéj objektum ================       
 
@@ -77,14 +77,22 @@ var openStart = 0;
 var openScaleX = 1.2;
 var openScaleY = 2;
 
-window.onload = function Open() {
-    setInterval(function () {
-        ctx.clearRect(0, 0, W, H);
-        blink(W / 2, H / 2, 0, openScaleX, openScaleY, openStart);
-        openStart += 10;
-        openScaleX += 0.01;
-        openScaleY += 0.01;
-    }, 1);
+var openBlink = setInterval(function () {
+    ctx.clearRect(0, 0, W, H);
+    blink(W / 2, H / 2, 0, openScaleX, openScaleY, openStart);
+    openStart += 10;
+    openScaleX += 0.01;
+    openScaleY += 0.01;
+    if (openStart >= H) {
+        stopOpenBlink();
+    }
+}, 1);
 
-};
+window.onload = openBlink;
+
+function stopOpenBlink() {
+    clearInterval(openBlink);
+}
+
+// ================ oldalelhagyás anim (becsuk) ================ 
 
