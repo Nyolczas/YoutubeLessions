@@ -85,6 +85,7 @@ var openBlink = setInterval(function () {
     openScaleY += 0.01;
     if (openStart >= H) {
         stopOpenBlink();
+        document.getElementById("blink-canvas").style.visibility = "hidden";
     }
 }, 1);
 
@@ -95,4 +96,20 @@ function stopOpenBlink() {
 }
 
 // ================ oldalelhagyás anim (becsuk) ================ 
+var closeBlink;
+function linkBlink() {
+    document.getElementById("blink-canvas").style.visibility = "visible";
+    closeBlink = setInterval(function () {
+        ctx.clearRect(0, 0, W, H);
+        blink(W / 2, H / 2, 0, openScaleX, openScaleY, openStart);
+        openStart -= 10;
+        if (openStart <= 0) {
+            stopCloseBlink();
+        }
+    }, 1);
+}
+
+function stopCloseBlink() {
+    clearInterval(closeBlink);
+}
 
