@@ -72,7 +72,17 @@ function blink(X, Y, R, Sx, Sy, Open) {
     lid2.rajzol(ctx);
 }
 
-// ================ meghívás ================ 
+// ================ betöltés anim (kinyit) ================ 
+// anim controls
+var time = 50000;
+var openStart = 0;
 
-window.onload = blink(W/2, H/2, 0, 1, 1, 120);
+window.onload = function Open() {
+    setInterval(function () {
+        ctx.clearRect(0, 0, W, H);
+        blink(W / 2, H / 2, 0, 1, 1, openStart);
+        openStart++;
+    }, 30);
+
+};
 
